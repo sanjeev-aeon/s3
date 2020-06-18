@@ -1,0 +1,386 @@
+
+Graphics Feature Status
+Canvas: Hardware accelerated
+Flash: Hardware accelerated
+Flash Stage3D: Hardware accelerated
+Flash Stage3D Baseline profile: Hardware accelerated
+Compositing: Hardware accelerated
+Multiple Raster Threads: Enabled
+Out-of-process Rasterization: Unavailable
+OpenGL: Enabled
+Hardware Protected Video Decode: Hardware accelerated
+Rasterization: Unavailable
+Skia Renderer: Disabled
+Video Decode: Hardware accelerated
+Vulkan: Disabled
+WebGL: Hardware accelerated
+WebGL2: Hardware accelerated
+Driver Bug Workarounds
+clear_uniforms_before_first_program_use
+decode_encode_srgb_for_generatemipmap
+disable_discard_framebuffer
+exit_on_context_lost
+force_cube_complete
+msaa_is_slow
+scalarize_vec_and_mat_constructor_args
+disabled_extension_GL_KHR_blend_equation_advanced
+disabled_extension_GL_KHR_blend_equation_advanced_coherent
+Problems Detected
+GPU rasterization should only be enabled on NVIDIA and Intel and AMD RX-R2 GPUs with DX11+ or any GPU using ANGLE's GL backend.: 1047002
+Disabled Features: gpu_rasterization
+Some drivers are unable to reset the D3D device in the GPU process sandbox
+Applied Workarounds: exit_on_context_lost
+Clear uniforms before first program use on all platforms: 124764, 349137
+Applied Workarounds: clear_uniforms_before_first_program_use
+Always rewrite vec/mat constructors to be consistent: 398694
+Applied Workarounds: scalarize_vec_and_mat_constructor_args
+ANGLE crash on glReadPixels from incomplete cube map texture: 518889
+Applied Workarounds: force_cube_complete
+On Intel GPUs MSAA performance is not acceptable for GPU rasterization: 527565
+Applied Workarounds: msaa_is_slow
+Framebuffer discarding can hurt performance on non-tilers: 570897
+Applied Workarounds: disable_discard_framebuffer
+Disable KHR_blend_equation_advanced until cc shaders are updated: 661715
+Applied Workarounds: disable(GL_KHR_blend_equation_advanced), disable(GL_KHR_blend_equation_advanced_coherent)
+Decode and Encode before generateMipmap for srgb format textures on Windows: 634519
+Applied Workarounds: decode_encode_srgb_for_generatemipmap
+ANGLE Features
+disable_program_caching_for_transform_feedback (Frontend workarounds): Disabled
+On some GPUs, program binaries don't contain transform feedback varyings
+lose_context_on_out_of_memory (Frontend workarounds): Enabled: true
+Some users rely on a lost context notification if a GL_OUT_OF_MEMORY error occurs
+scalarize_vec_and_mat_constructor_args (Frontend workarounds) 398694: Enabled: true
+Always rewrite vec/mat constructors to be consistent
+sync_framebuffer_bindings_on_tex_image (Frontend workarounds): Disabled
+On some drivers TexImage sometimes seems to interact with the Framebuffer
+add_dummy_texture_no_render_target (D3D workarounds) anglebug:2152: Disabled
+On some drivers when rendering with no render target, two bugs lead to incorrect behavior
+allow_clear_for_robust_resource_init (D3D workarounds) 941620: Enabled: true
+Some drivers corrupt texture data when clearing for robust resource initialization.
+call_clear_twice (D3D workarounds) 655534: Disabled
+Using clear() may not take effect
+depth_stencil_blit_extra_copy (D3D workarounds) anglebug:1452: Disabled
+Bug in some drivers triggers a TDR when using CopySubresourceRegion from a staging texture to a depth/stencil
+disable_b5g6r5_support (D3D workarounds): Disabled
+Textures with the format DXGI_FORMAT_B5G6R5_UNORM have incorrect data
+dont_translate_uniform_block_to_structured_buffer (D3D workarounds): Disabled
+Fails to allocate ShaderResourceView for StructuredBuffer on some drivers
+emulate_isnan_float (D3D workarounds) 650547: Disabled
+Using isnan() on highp float will get wrong answer
+emulate_tiny_stencil_textures (D3D workarounds): Disabled
+1x1 and 2x2 mips of depth/stencil textures aren't sampled correctly
+expand_integer_pow_expressions (D3D workarounds): Enabled: true
+The HLSL optimizer has a bug with optimizing 'pow' in certain integer-valued expressions
+flush_after_ending_transform_feedback (D3D workarounds): Disabled
+Some drivers sometimes write out-of-order results to StreamOut buffers when transform feedback is used to repeatedly write to the same buffer positions
+force_atomic_value_resolution (D3D workarounds) anglebug:3246: Disabled
+On some drivers the return value from RWByteAddressBuffer.InterlockedAdd does not resolve when used in the .yzw components of a RWByteAddressBuffer.Store operation
+get_dimensions_ignores_base_level (D3D workarounds): Disabled
+Some drivers do not take into account the base level of the texture in the results of the HLSL GetDimensions builtin
+mrt_perf_workaround (D3D workarounds): Enabled: true
+Some drivers have a bug where they ignore null render targets
+pre_add_texel_fetch_offsets (D3D workarounds): Disabled
+HLSL's function texture.Load returns 0 when the parameter Location is negative, even if the sum of Offset and Location is in range
+rewrite_unary_minus_operator (D3D workarounds): Disabled
+Evaluating unary minus operator on integer may get wrong answer in vertex shaders
+select_view_in_geometry_shader (D3D workarounds): Disabled
+The viewport or render target slice will be selected in the geometry shader stage for the ANGLE_multiview extension
+set_data_faster_than_image_upload (D3D workarounds): Disabled: false
+Set data faster than image upload
+skip_vs_constant_register_zero (D3D workarounds): Disabled
+In specific cases the driver doesn't handle constant register zero correctly
+use_instanced_point_sprite_emulation (D3D workarounds): Disabled: false
+Some D3D11 renderers do not support geometry shaders for pointsprite emulation
+use_system_memory_for_constant_buffers (D3D workarounds) 593024: Disabled
+Copying from staging storage to constant buffer storage does not work
+zero_max_lod (D3D workarounds): Disabled
+Missing an option to disable mipmaps on a mipmapped texture
+Version Information
+Data exported	2020-06-17T20:11:50.935Z
+Chrome version	Chrome/83.0.4103.106
+Operating system	Windows NT 10.0.17763
+Software rendering list URL	https://chromium.googlesource.com/chromium/src/+/ce7134bb3d95141cd18f1e65772a4247f282d950/gpu/config/software_rendering_list.json
+Driver bug list URL	https://chromium.googlesource.com/chromium/src/+/ce7134bb3d95141cd18f1e65772a4247f282d950/gpu/config/gpu_driver_bug_list.json
+ANGLE commit id	a4b21cf26074
+2D graphics backend	Skia/83 c3d05a789930913af94174961bc6f90894196f62
+Command Line	"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --flag-switches-begin --use-angle=d3d9 --flag-switches-end --enable-audio-service-sandbox
+Driver Information
+Initialization time	791
+In-process GPU	false
+Passthrough Command Decoder	true
+Sandboxed	true
+GPU0	VENDOR= 0x8086, DEVICE=0x3ea0, SUBSYS=0x08b81028, REV=2 *ACTIVE*
+GPU1	VENDOR= 0x1414, DEVICE=0x008c
+Optimus	false
+AMD switchable	false
+Desktop compositing	Aero Glass
+Direct composition	false
+Supports overlays	false
+YUY2 overlay support	NONE
+NV12 overlay support	NONE
+Diagonal Monitor Size of \\.\DISPLAY1	23.9"
+Diagonal Monitor Size of \\.\DISPLAY2	23.9"
+Driver D3D12 feature level	D3D 12.1
+Driver Vulkan API version	Vulkan API 1.2.0
+Driver vendor	ANGLE (Intel)
+Driver version	26.20.100.6860
+GPU CUDA compute capability major version	0
+Pixel shader version	3.0
+Vertex shader version	3.0
+Max. MSAA samples	16
+Machine model name	
+Machine model version	
+GL_VENDOR	Google Inc.
+GL_RENDERER	ANGLE (Intel(R) UHD Graphics 620 Direct3D9Ex vs_3_0 ps_3_0)
+GL_VERSION	OpenGL ES 2.0.0 (ANGLE 2.1.0.a4b21cf26074)
+GL_EXTENSIONS	GL_ANGLE_client_arrays GL_ANGLE_depth_texture GL_ANGLE_explicit_context GL_ANGLE_explicit_context_gles1 GL_ANGLE_framebuffer_blit GL_ANGLE_framebuffer_multisample GL_ANGLE_instanced_arrays GL_ANGLE_memory_size GL_ANGLE_multi_draw GL_ANGLE_pack_reverse_row_order GL_ANGLE_program_cache_control GL_ANGLE_request_extension GL_ANGLE_robust_client_memory GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_ANGLE_texture_usage GL_ANGLE_translated_shader_source GL_CHROMIUM_bind_generates_resource GL_CHROMIUM_bind_uniform_location GL_CHROMIUM_color_buffer_float_rgb GL_CHROMIUM_color_buffer_float_rgba GL_CHROMIUM_copy_texture GL_CHROMIUM_lose_context GL_CHROMIUM_sync_query GL_EXT_blend_minmax GL_EXT_color_buffer_half_float GL_EXT_debug_marker GL_EXT_float_blend GL_EXT_frag_depth GL_EXT_occlusion_query_boolean GL_EXT_read_format_bgra GL_EXT_robustness GL_EXT_shader_texture_lod GL_EXT_texture_compression_dxt1 GL_EXT_texture_filter_anisotropic GL_EXT_texture_format_BGRA8888 GL_EXT_texture_storage GL_EXT_unpack_subimage GL_KHR_debug GL_KHR_parallel_shader_compile GL_NV_fence GL_NV_pack_subimage GL_NV_read_depth GL_NV_read_stencil GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth32 GL_OES_element_index_uint GL_OES_get_program_binary GL_OES_packed_depth_stencil GL_OES_rgb8_rgba8 GL_OES_standard_derivatives GL_OES_surfaceless_context GL_OES_texture_border_clamp GL_OES_texture_float GL_OES_texture_float_linear GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_texture_npot GL_OES_vertex_array_object GL_WEBGL_video_texture
+Disabled Extensions	GL_KHR_blend_equation_advanced GL_KHR_blend_equation_advanced_coherent
+Disabled WebGL Extensions	
+Window system binding vendor	Google Inc. (adapter LUID: 00000000000126b6)
+Window system binding version	1.4 (ANGLE 2.1.0.a4b21cf26074)
+Window system binding extensions	EGL_EXT_create_context_robustness EGL_ANGLE_d3d_share_handle_client_buffer EGL_ANGLE_d3d_texture_client_buffer EGL_ANGLE_surface_d3d_texture_2d_share_handle EGL_ANGLE_query_surface_pointer EGL_ANGLE_window_fixed_size EGL_NV_post_sub_buffer EGL_KHR_create_context EGL_EXT_device_query EGL_KHR_image EGL_KHR_image_base EGL_KHR_gl_texture_2D_image EGL_KHR_gl_renderbuffer_image EGL_KHR_get_all_proc_addresses EGL_ANGLE_flexible_surface_compatibility EGL_ANGLE_create_context_webgl_compatibility EGL_CHROMIUM_create_context_bind_generates_resource EGL_EXT_pixel_format_float EGL_KHR_surfaceless_context EGL_ANGLE_display_texture_share_group EGL_ANGLE_create_context_client_arrays EGL_ANGLE_program_cache_control EGL_ANGLE_robust_resource_initialization EGL_ANGLE_create_context_extensions_enabled EGL_ANDROID_blob_cache EGL_ANDROID_recordable EGL_ANGLE_create_context_backwards_compatible EGL_KHR_create_context_no_error
+Direct rendering version	unknown
+Reset notification strategy	0x8252
+GPU process crash count	0
+gfx::BufferFormats supported for allocation and texturing	R_8: not supported, R_16: not supported, RG_88: not supported, BGR_565: not supported, RGBA_4444: not supported, RGBX_8888: not supported, RGBA_8888: not supported, BGRX_8888: not supported, BGRA_1010102: not supported, RGBA_1010102: not supported, BGRA_8888: not supported, RGBA_F16: not supported, YVU_420: not supported, YUV_420_BIPLANAR: not supported, P010: not supported
+Compositor Information
+Tile Update Mode	One-copy
+Partial Raster	Enabled
+GpuMemoryBuffers Status
+R_8	Software only
+R_16	Software only
+RG_88	Software only
+BGR_565	Software only
+RGBA_4444	Software only
+RGBX_8888	GPU_READ, SCANOUT
+RGBA_8888	GPU_READ, SCANOUT
+BGRX_8888	Software only
+BGRA_1010102	Software only
+RGBA_1010102	Software only
+BGRA_8888	Software only
+RGBA_F16	Software only
+YVU_420	Software only
+YUV_420_BIPLANAR	Software only
+P010	Software only
+Display(s) Information
+Info	Display[2528732444] bounds=[0,0 1920x1080], workarea=[0,0 1920x1050], scale=1, rotation=0, panel_rotation=0 external.
+Color space (sRGB/no-alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (sRGB/no-alpha)	BGRX_8888
+Color space (sRGB/alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (sRGB/alpha)	BGRA_8888
+Color space (WCG/no-alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (WCG/no-alpha)	BGRX_8888
+Color space (WCG/alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (WCG/alpha)	BGRA_8888
+Color space (HDR/no-alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (HDR/no-alpha)	BGRX_8888
+Color space (HDR/alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (HDR/alpha)	BGRA_8888
+SDR white level in nits	80
+Bits per color component	8
+Bits per pixel	24
+Refresh Rate in Hz	59
+Info	Display[2779098405] bounds=[1920,0 1920x1080], workarea=[1920,0 1920x1050], scale=1, rotation=0, panel_rotation=0 external.
+Color space (sRGB/no-alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (sRGB/no-alpha)	BGRX_8888
+Color space (sRGB/alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (sRGB/alpha)	BGRA_8888
+Color space (WCG/no-alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (WCG/no-alpha)	BGRX_8888
+Color space (WCG/alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (WCG/alpha)	BGRA_8888
+Color space (HDR/no-alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (HDR/no-alpha)	BGRX_8888
+Color space (HDR/alpha)	{primaries:BT709, transfer:IEC61966_2_1, matrix:RGB, range:FULL}
+Buffer format (HDR/alpha)	BGRA_8888
+SDR white level in nits	80
+Bits per color component	8
+Bits per pixel	24
+Refresh Rate in Hz	59
+Video Acceleration Information
+Decode h264 baseline	48x48 to 1920x1088 pixels
+Decode h264 main	48x48 to 1920x1088 pixels
+Decode h264 high	48x48 to 1920x1088 pixels
+Encode h264 baseline	0x0 to 3840x2176 pixels, and/or 30.000 fps
+Encode h264 main	0x0 to 3840x2176 pixels, and/or 30.000 fps
+Encode h264 high	0x0 to 3840x2176 pixels, and/or 30.000 fps
+Vulkan Information
+Device Performance Information
+Total Physical Memory (Gb)	15
+Total Disk Space (Gb)	237
+Hardware Concurrency	8
+System Commit Limit (Gb)	18
+D3D11 Feature Level	12_1
+Has Discrete GPU	no
+Intel GPU Generation	9
+Software Rendering	No
+Diagnostics
+0
+b3DAccelerationEnabled	true
+b3DAccelerationExists	true
+bAGPEnabled	true
+bAGPExistenceValid	true
+bAGPExists	true
+bCanRenderWindow	true
+bDDAccelerationEnabled	true
+bDriverBeta	false
+bDriverDebug	false
+bDriverSigned	false
+bDriverSignedValid	false
+bNoHardware	false
+dwBpp	32
+dwDDIVersion	12
+dwHeight	1080
+dwRefreshRate	59
+dwWHQLLevel	0
+dwWidth	1920
+iAdapter	0
+lDriverSize	1888864
+lMiniVddSize	0
+szAGPStatusEnglish	Enabled
+szAGPStatusLocalized	Enabled
+szChipType	Intel(R) UHD Graphics Family
+szD3DStatusEnglish	Enabled
+szD3DStatusLocalized	Enabled
+szDACType	Internal
+szDDIVersionEnglish	12
+szDDIVersionLocalized	12
+szDDStatusEnglish	Enabled
+szDDStatusLocalized	Enabled
+szDXVAHDEnglish	Supported
+szDXVAModes	ModeMPEG2_A ModeMPEG2_C ModeWMV9_C ModeVC1_C
+szDescription	Intel(R) UHD Graphics 620
+szDeviceId	0x3EA0
+szDeviceIdentifier	{D7B78E66-7DE0-11CF-5469-DC28B9C2D735}
+szDeviceName	\\.\DISPLAY1
+szDisplayMemoryEnglish	8225 MB
+szDisplayMemoryLocalized	8225 MB
+szDisplayModeEnglish	1920 x 1080 (32 bit) (59Hz)
+szDisplayModeLocalized	1920 x 1080 (32 bit) (59Hz)
+szDriverAssemblyVersion	26.20.100.6860
+szDriverAttributes	Final Retail
+szDriverDateEnglish	4/29/2019 8:00:00 PM
+szDriverDateLocalized	4/29/2019 20:00:00
+szDriverLanguageEnglish	English
+szDriverLanguageLocalized	English
+szDriverModelEnglish	WDDM 2.5
+szDriverModelLocalized	WDDM 2.5
+szDriverName	C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_bd47ae63e67b288d\igdumdim64.dll,C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_bd47ae63e67b288d\igd10iumd64.dll,C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_bd47ae63e67b288d\igd10iumd64.dll,C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_bd47ae63e67b288d\igd12umd64.dll
+szDriverNodeStrongName	oem185.inf:5f63e5345b9625c8:iWHL_w10_DS:26.20.100.6860:PCI\VEN_8086&DEV_3EA0&SUBSYS_08B81028
+szDriverSignDate	Unknown
+szDriverVersion	26.20.0100.6860
+szKeyDeviceID	Enum\PCI\VEN_8086&DEV_3EA0&SUBSYS_08B81028&REV_02
+szKeyDeviceKey	\Registry\Machine\System\CurrentControlSet\Control\Video\{0658EE21-62DA-11EA-9EF9-8AB1C0DD57ED}\0000
+szManufacturer	Intel Corporation
+szMiniVdd	unknown
+szMiniVddDateEnglish	Unknown
+szMiniVddDateLocalized	unknown
+szMonitorMaxRes	Unknown
+szMonitorName	Generic PnP Monitor
+szNotesEnglish	No problems found.
+szNotesLocalized	No problems found.
+szOverlayEnglish	Supported
+szRankOfInstalledDriver	00CF0001
+szRegHelpText	Unknown
+szRevision	Unknown
+szRevisionId	0x0002
+szSubSysId	0x08B81028
+szTestResultD3D7English	Not run
+szTestResultD3D7Localized	Not run
+szTestResultD3D8English	Not run
+szTestResultD3D8Localized	Not run
+szTestResultD3D9English	Not run
+szTestResultD3D9Localized	Not run
+szTestResultDDEnglish	Not run
+szTestResultDDLocalized	Not run
+szVdd	unknown
+szVendorId	0x8086
+1
+b3DAccelerationEnabled	true
+b3DAccelerationExists	true
+bAGPEnabled	true
+bAGPExistenceValid	true
+bAGPExists	true
+bCanRenderWindow	true
+bDDAccelerationEnabled	true
+bDriverBeta	false
+bDriverDebug	false
+bDriverSigned	false
+bDriverSignedValid	false
+bNoHardware	false
+dwBpp	32
+dwDDIVersion	12
+dwHeight	1080
+dwRefreshRate	59
+dwWHQLLevel	0
+dwWidth	1920
+iAdapter	1
+lDriverSize	1888864
+lMiniVddSize	0
+szAGPStatusEnglish	Enabled
+szAGPStatusLocalized	Enabled
+szChipType	Intel(R) UHD Graphics Family
+szD3DStatusEnglish	Enabled
+szD3DStatusLocalized	Enabled
+szDACType	Internal
+szDDIVersionEnglish	12
+szDDIVersionLocalized	12
+szDDStatusEnglish	Enabled
+szDDStatusLocalized	Enabled
+szDXVAHDEnglish	Supported
+szDXVAModes	ModeMPEG2_A ModeMPEG2_C ModeWMV9_C ModeVC1_C
+szDescription	Intel(R) UHD Graphics 620
+szDeviceId	0x3EA0
+szDeviceIdentifier	{D7B78E66-7DE0-11CF-5469-DC28B9C2D735}
+szDeviceName	\\.\DISPLAY2
+szDisplayMemoryEnglish	8225 MB
+szDisplayMemoryLocalized	8225 MB
+szDisplayModeEnglish	1920 x 1080 (32 bit) (59Hz)
+szDisplayModeLocalized	1920 x 1080 (32 bit) (59Hz)
+szDriverAssemblyVersion	26.20.100.6860
+szDriverAttributes	Final Retail
+szDriverDateEnglish	4/29/2019 8:00:00 PM
+szDriverDateLocalized	4/29/2019 20:00:00
+szDriverLanguageEnglish	English
+szDriverLanguageLocalized	English
+szDriverModelEnglish	WDDM 2.5
+szDriverModelLocalized	WDDM 2.5
+szDriverName	C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_bd47ae63e67b288d\igdumdim64.dll,C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_bd47ae63e67b288d\igd10iumd64.dll,C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_bd47ae63e67b288d\igd10iumd64.dll,C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_bd47ae63e67b288d\igd12umd64.dll
+szDriverNodeStrongName	oem185.inf:5f63e5345b9625c8:iWHL_w10_DS:26.20.100.6860:PCI\VEN_8086&DEV_3EA0&SUBSYS_08B81028
+szDriverSignDate	Unknown
+szDriverVersion	26.20.0100.6860
+szKeyDeviceID	Enum\PCI\VEN_8086&DEV_3EA0&SUBSYS_08B81028&REV_02
+szKeyDeviceKey	\Registry\Machine\System\CurrentControlSet\Control\Video\{0658EE21-62DA-11EA-9EF9-8AB1C0DD57ED}\0001
+szManufacturer	Intel Corporation
+szMiniVdd	unknown
+szMiniVddDateEnglish	Unknown
+szMiniVddDateLocalized	unknown
+szMonitorMaxRes	Unknown
+szMonitorName	Generic PnP Monitor
+szNotesEnglish	No problems found.
+szNotesLocalized	No problems found.
+szOverlayEnglish	Supported
+szRankOfInstalledDriver	00CF0001
+szRegHelpText	Unknown
+szRevision	Unknown
+szRevisionId	0x0002
+szSubSysId	0x08B81028
+szTestResultD3D7English	Not run
+szTestResultD3D7Localized	Not run
+szTestResultD3D8English	Not run
+szTestResultD3D8Localized	Not run
+szTestResultD3D9English	Not run
+szTestResultD3D9Localized	Not run
+szTestResultDDEnglish	Not run
+szTestResultDDLocalized	Not run
+szVdd	unknown
+szVendorId	0x8086
+Log Messages
+[32444:11496:0617/161137.584:ERROR:gl_surface_egl.cc(750)] : EGL Driver message (Error) eglQueryDeviceAttribEXT: Bad attribute.
+[32444:11496:0617/161137.586:ERROR:gl_surface_egl.cc(750)] : EGL Driver message (Error) eglQueryDeviceAttribEXT: Bad attribute.
+[32444:11496:0617/161137.739:ERROR:gl_surface_egl.cc(750)] : EGL Driver message (Error) eglQueryDeviceAttribEXT: Bad attribute.
+[32444:11496:0617/161137.740:ERROR:gl_surface_egl.cc(750)] : EGL Driver message (Error) eglQueryDeviceAttribEXT: Bad attribute.
+[32444:11496:0617/161137.740:ERROR:gl_surface_egl.cc(750)] : EGL Driver message (Error) eglQueryDeviceAttribEXT: Bad attribute.
+[32444:11496:0617/161137.740:ERROR:gl_surface_egl.cc(750)] : EGL Driver message (Error) eglQueryDeviceAttribEXT: Bad attribute.
+[32444:11496:0617/161147.151:ERROR:gl_surface_egl.cc(750)] : EGL Driver message (Error) eglQueryDeviceAttribEXT: Bad attribute.
+GpuProcessHost: The info collection GPU process exited normally. Everything is okay.
